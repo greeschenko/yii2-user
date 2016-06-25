@@ -1,0 +1,21 @@
+{
+    "name": "greeschenko/yii2-user",
+    "description": "Highly variable user registration, authentication and management system",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","yii2-user","user system","user management","greeschenko"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oleksiy Hryshchenko",
+            "email": "greeschenko@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "greeschenko\\user\\": ""
+        }
+    }
+}
