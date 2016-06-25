@@ -22,10 +22,33 @@ or add
 to the require section of your `composer.json` file.
 
 
+update database
+
+$ php yii migrate/up --migrationPath=@vendor/greeschenko/yii2-user/migrations
+
+
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
+add to you app config
 
-```php
-<?= \greeschenko\user\AutoloadExample::widget(); ?>```
+```
+'modules'=>[
+    'user'=> [
+        'class'=>'greeschenko\user\Module',
+    ],
+],
+```
+and uncomment urlManager component
+```
+    'components' => [
+        ...
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
+        ...
+    ]
+```
