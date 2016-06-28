@@ -4,7 +4,7 @@ namespace tests\codeception\unit\models;
 
 use Yii;
 use yii\codeception\TestCase;
-use greeschenko\user\models\LoginForm;
+use greeschenko\user\models\User;
 use Codeception\Specify;
 
 class LoginFormTest extends TestCase
@@ -19,10 +19,12 @@ class LoginFormTest extends TestCase
 
     public function testLoginNoUser()
     {
-        $model = new LoginForm([
+        $model = new User([
             'username' => 'not_existing_username',
             'password' => 'not_existing_password',
         ]);
+
+        $model->scenario = 'login';
 
         $this->specify('user should not be able to login, when there is no identity', function () use ($model) {
             expect('model should not login user', $model->login())->false();
@@ -32,10 +34,11 @@ class LoginFormTest extends TestCase
 
     public function testLoginWrongPassword()
     {
-        $model = new LoginForm([
+        $model = new User([
             'username' => 'demo@demo.d',
             'password' => 'wrong_password',
         ]);
+        $model->scenario = 'login';
 
         $this->specify('user should not be able to login with wrong password', function () use ($model) {
             expect('model should not login user', $model->login())->false();
@@ -46,10 +49,11 @@ class LoginFormTest extends TestCase
 
     public function testLoginCorrect()
     {
-        $model = new LoginForm([
+        $model = new User([
             'username' => 'demo@demo.d',
             'password' => 'demopass',
         ]);
+        $model->scenario = 'login';
 
         $this->specify('user should be able to login with correct credentials', function () use ($model) {
             expect('model should login user', $model->login())->true();

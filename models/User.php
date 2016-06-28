@@ -33,6 +33,9 @@ class User extends ActiveRecord implements IdentityInterface
     public $newpassword;
     public $newpasswordre;
 
+    public $rememberMe = true;
+    private $_user = false;
+
     /**
      * @inheritdoc
      */
@@ -81,20 +84,37 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email'], 'required'],
+            /* start login scenario */
+            [['username', 'password'], 'required','on'=>'login'],
+            ['rememberMe', 'boolean','on'=>'login'],
+            ['password', 'checkPassword','on'=>'login'],
+            /* end login scenario */
+
+            /* start register scenario */
+            /*[['username', 'auth_key', 'password_hash', 'email'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
             [['email'], 'unique'],
-            [['password_reset_token'], 'unique'],
+            [['password_reset_token'], 'unique'],*/
+            /* end register scenario */
+
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['login'] = ['username', 'password', 'rememberMe'];
+
+        return $scenarios;
     }
 
     public function checkPassword($attribute, $params)
     {
         if ( !$this->validatePassword($this->$attribute) ) {
-            $this->addError($attribute, Yii::t('app', 'Wrong password'));
+            $this->addError($attribute, Yii::t('app', 'Wrong login or password'));
         }
     }
 
@@ -211,7 +231,43 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        if ( !$this->hasErrors() and $this->getUser() != null ) {
+            return Yii::$app
+                ->security
+                ->validatePassword(
+                    $password,
+                    $this->getUser()->password_hash
+                );
+        }
+
+        return false;
+    }
+
+    /**
+     * Logs in a user using the provided username and password.
+     * @return boolean whether the user is logged in successfully
+     */
+    public function login()
+    {
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        }
+
+        return false;
+    }
+
+    /**
+     * Finds user by [[username]]
+     *
+     * @return User|null
+     */
+    public function getUser()
+    {
+        if ($this->_user === false) {
+            $this->_user = static::findByUsername($this->username);
+        }
+
+        return $this->_user;
     }
 
     /**

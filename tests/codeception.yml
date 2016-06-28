@@ -14,3 +14,5 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+config:
+    test_entry_url: http://yii2constructive.ga/index-test.php

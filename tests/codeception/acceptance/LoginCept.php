@@ -9,6 +9,10 @@ $I->wantTo('ensure that login works');
 
 $loginPage = LoginPage::openBy($I);
 
+if (method_exists($I, 'wait')) {
+    $I->wait(5);
+}
+
 $I->see('Login', 'h1');
 
 $I->amGoingTo('try to login with empty credentials');
