@@ -39,7 +39,22 @@ add to you app config
     ],
 ],
 ```
+and change identityClass
+
+```
+    'components' => [
+        ...
+        'user' => [
+            'identityClass' => 'greeschenko\user\models\User',
+            'enableAutoLogin' => true,
+        ],
+        ...
+    ]
+
+```
+
 and uncomment urlManager component
+
 ```
     'components' => [
         ...
