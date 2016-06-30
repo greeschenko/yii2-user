@@ -90,6 +90,17 @@ class User extends ActiveRecord implements IdentityInterface
             ['password', 'checkPassword','on'=>'login'],
             /* end login scenario */
 
+            /* start password_reset */
+            ['email', 'filter', 'filter' => 'trim','on'=>'reset'],
+            ['email', 'required','on'=>'reset'],
+            ['email', 'email','on'=>'reset'],
+            ['email', 'exist',
+                'targetClass' => self,
+                'filter' => ['status' => self::STATUS_ACTIVE],
+                'message' => Yii::t('app','There is no user with such email.')
+            ,'on'=>'reset'],
+            /* end password_reset */
+
             /* start register scenario */
             /*[['username', 'auth_key', 'password_hash', 'email'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
@@ -107,6 +118,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $scenarios = parent::scenarios();
         $scenarios['login'] = ['username', 'password', 'rememberMe'];
+        $scenarios['reset'] = ['email'];
 
         return $scenarios;
     }
@@ -335,6 +347,35 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         return $password;
+    }
+
+    /**
+     * Sends an email with a link, for resetting the password.
+     *
+     * @return boolean whether the email was send
+     */
+    public function sendResetEmail()
+    {
+        $user = User::findOne([
+            'status' => User::STATUS_ACTIVE,
+            'email' => $this->email,
+        ]);
+
+        if ($user) {
+            if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
+                $user->generatePasswordResetToken();
+            }
+
+            if ($user->save()) {
+                return \Yii::$app->mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
+                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                    ->setTo($this->email)
+                    ->setSubject('Password reset for ' . \Yii::$app->name)
+                    ->send();
+            }
+        }
+
+        return false;
     }
 
     /**

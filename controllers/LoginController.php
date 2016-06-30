@@ -4,13 +4,40 @@ namespace greeschenko\user\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use greeschenko\user\models\User;
 
 /**
- * Default controller for the `user` module
+ * login controller for the `user` module
  */
 class LoginController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['out'],
+                'rules' => [
+                    [
+                        'actions' => ['out'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'out' => ['post'],
+                ],
+            ],
+        ];
+    }
     /**
      * Login action.
      *
@@ -30,5 +57,17 @@ class LoginController extends Controller
         return $this->render('index', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Logout action.
+     *
+     * @return string
+     */
+    public function actionOut()
+    {
+        Yii::$app->user->logout();
+
+        return $this->goHome();
     }
 }
