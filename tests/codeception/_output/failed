@@ -1,0 +1,2 @@
+codeception/unit/models/ResetTest.php:testResetPassEmail | email should be send | examples index 0
+codeception/unit/models/ResetTest.php:testResetPassEmail

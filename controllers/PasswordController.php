@@ -16,9 +16,10 @@ class PasswordController extends Controller
      *
      * @return mixed
      */
-    public function actionRequestReset()
+    public function actionResetRequest()
     {
-        $model = new PasswordResetRequestForm();
+        $model = new User();
+        $model->scenario = 'reset';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
@@ -29,7 +30,7 @@ class PasswordController extends Controller
             }
         }
 
-        return $this->render('requestPasswordResetToken', [
+        return $this->render('_reset_request', [
             'model' => $model,
         ]);
     }

@@ -95,7 +95,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'required','on'=>'reset'],
             ['email', 'email','on'=>'reset'],
             ['email', 'exist',
-                'targetClass' => self,
+                /*'targetClass' => self,*/
                 'filter' => ['status' => self::STATUS_ACTIVE],
                 'message' => Yii::t('app','There is no user with such email.')
             ,'on'=>'reset'],
