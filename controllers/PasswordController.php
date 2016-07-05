@@ -21,7 +21,7 @@ class PasswordController extends Controller
         $model = new User();
         $model->scenario = 'reset';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
+            if ($model->sendResetEmail()) {
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
 
                 return $this->goHome();
