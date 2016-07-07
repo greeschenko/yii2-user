@@ -7,6 +7,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\behaviors\TimestampBehavior;
 use yii\base\NotSupportedException;
+use greeschenko\user\components\Mail;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -367,15 +368,20 @@ class User extends ActiveRecord implements IdentityInterface
             }
 
             if ($user->save()) {
-                return \Yii::$app->mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
-                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
-                    ->setTo($this->email)
-                    ->setSubject('Password reset for ' . \Yii::$app->name)
-                    ->send();
+                return $this->mail->sendResetToken($user);
             }
         }
 
         return false;
+    }
+
+    /**
+     * @return Mail
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function getMail()
+    {
+        return \Yii::$container->get(Mail::className());
     }
 
     /**
