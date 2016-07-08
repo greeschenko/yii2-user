@@ -22,6 +22,7 @@ class PasswordController extends Controller
         $model->scenario = 'reset';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendResetEmail()) {
+                //TODO add Yii::t(
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
 
                 return $this->goHome();
@@ -42,7 +43,7 @@ class PasswordController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionReset($token)
     {
         try {
             $model = new ResetPasswordForm($token);

@@ -37,9 +37,9 @@ class Mail extends Component
         $mailer->viewPath = $this->viewPath;
 
         if ($this->sender === null) {
-            $this->sender = ($this->module->params['adminEmail'])
+            $this->sender = (isset($this->module->params['adminEmail']))
                 ? $this->module->params['adminEmail']
-                : (Yii::$app->params['adminEmail'])
+                : (isset(Yii::$app->params['adminEmail']))
                     ? Yii::$app->params['adminEmail']
                     : 'no-reply@example.com';
         }

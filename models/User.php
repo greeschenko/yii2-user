@@ -34,9 +34,16 @@ class User extends ActiveRecord implements IdentityInterface
     public $newpassword;
     public $newpasswordre;
 
+    public $module;
+
     public $rememberMe = true;
     private $_user = false;
 
+    public function init()
+    {
+        $this->module = Yii::$app->getModule('user');
+        parent::init();
+    }
     /**
      * @inheritdoc
      */
@@ -207,7 +214,9 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        $expire = Yii::$app
+            ->getModule('user')
+            ->params['user.passwordResetTokenExpire'];
 
         return $timestamp + $expire >= time();
     }
