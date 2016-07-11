@@ -109,6 +109,11 @@ class User extends ActiveRecord implements IdentityInterface
             ,'on'=>'reset'],
             /* end password_reset */
 
+            /* start password_change */
+            ['newpassword','string','min'=>6,'max'=>255 , 'on' => 'passchange'],
+            ['newpasswordre','compare','compareAttribute'=>'newpassword', 'on' => 'passchange'],
+            /* end password_change */
+
             /* start register scenario */
             /*[['username', 'auth_key', 'password_hash', 'email'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
@@ -127,6 +132,7 @@ class User extends ActiveRecord implements IdentityInterface
         $scenarios = parent::scenarios();
         $scenarios['login'] = ['username', 'password', 'rememberMe'];
         $scenarios['reset'] = ['email'];
+        $scenarios['passchange'] = ['newpassword','newpasswordre'];
 
         return $scenarios;
     }
@@ -357,6 +363,19 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         return $password;
+    }
+
+    /**
+     * Resets password.
+     *
+     * @return boolean if password was reset.
+     */
+    public function resetPassword()
+    {
+        $this->setPassword($this->newpassword);
+        $this->removePasswordResetToken();
+
+        return $user->save(false);
     }
 
     /**

@@ -4,6 +4,8 @@ namespace greeschenko\user\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\BadRequestHttpException;
+use yii\base\InvalidParamException;
 use greeschenko\user\models\User;
 
 /**
@@ -22,12 +24,11 @@ class PasswordController extends Controller
         $model->scenario = 'reset';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendResetEmail()) {
-                //TODO add Yii::t(
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
 
-                return $this->goHome();
+                return $this->redirect('/user/login');
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+                Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, we are unable to reset password for email provided.'));
             }
         }
 
@@ -45,19 +46,20 @@ class PasswordController extends Controller
      */
     public function actionReset($token)
     {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
+        $model = User::findByPasswordResetToken($token);
+        if (!$model) {
+            throw new InvalidParamException( Yii::t('app', 'Wrong password reset token.'));
         }
+
+        $model->scenario = 'passchange';
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'New password was saved.'));
 
-            return $this->goHome();
+            return $this->redirect('/user/login');
         }
 
-        return $this->render('resetPassword', [
+        return $this->render('reset', [
             'model' => $model,
         ]);
     }
