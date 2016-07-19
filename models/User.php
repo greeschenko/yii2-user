@@ -159,6 +159,8 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+            'newpassword' => Yii::t('app', 'New Password'),
+            'newpasswordre' => Yii::t('app', 'New Password Repiat'),
         ];
     }
 
@@ -375,7 +377,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->setPassword($this->newpassword);
         $this->removePasswordResetToken();
 
-        return $user->save(false);
+        return $this->save(false);
     }
 
     /**
@@ -385,13 +387,13 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function sendResetEmail()
     {
-        $user = User::findOne([
-            'status' => User::STATUS_ACTIVE,
+        $user = static::findOne([
+            'status' => static::STATUS_ACTIVE,
             'email' => $this->email,
         ]);
 
         if ($user) {
-            if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
+            if (!static::isPasswordResetTokenValid($user->password_reset_token)) {
                 $user->generatePasswordResetToken();
             }
 

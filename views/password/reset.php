@@ -1,5 +1,7 @@
 <?php
 
+use yii\helpers\Html;
+
 $this->title = Yii::t('app', 'Password Reset');
 $this->params['breadcrumbs'][] = $this->title;
 
