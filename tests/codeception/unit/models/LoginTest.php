@@ -5,6 +5,7 @@ namespace tests\codeception\unit\models;
 use Yii;
 use yii\codeception\TestCase;
 use greeschenko\user\models\User;
+use tests\codeception\unit\fixtures\UserFixture;
 use Codeception\Specify;
 
 class LoginFormTest extends TestCase
@@ -60,5 +61,17 @@ class LoginFormTest extends TestCase
             expect('error message should not be set', $model->errors)->hasntKey('password');
             expect('user should be logged in', Yii::$app->user->isGuest)->false();
         });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function fixtures()
+    {
+        return [
+            'users' => [ 'class' => UserFixture::className(),
+                'dataFile' => '@tests/codeception/unit/fixtures/data/users.php'
+            ],
+        ];
     }
 }
