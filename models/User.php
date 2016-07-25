@@ -392,14 +392,12 @@ class User extends ActiveRecord implements IdentityInterface
             'email' => $this->email,
         ]);
 
-        if ($user) {
-            if (!static::isPasswordResetTokenValid($user->password_reset_token)) {
-                $user->generatePasswordResetToken();
-            }
+        if (!static::isPasswordResetTokenValid($user->password_reset_token)) {
+            $user->generatePasswordResetToken();
+        }
 
-            if ($user->save()) {
-                return $this->mail->sendResetToken($user);
-            }
+        if ($user->save()) {
+            return $user->mail->sendResetToken($user);
         }
 
         return false;

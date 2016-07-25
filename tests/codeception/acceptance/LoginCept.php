@@ -15,7 +15,7 @@ if (method_exists($I, 'wait')) {
 
 $I->see('Login', 'h1');
 
-$I->amGoingTo('try to login with empty credentials');
+/*$I->amGoingTo('try to login with empty credentials');
 $loginPage->login('', '');
 if (method_exists($I, 'wait')) {
     $I->wait(1);
@@ -41,4 +41,4 @@ $I->expectTo('see user info');
 $I->dontSee('Incorrect username or password.');
 if (method_exists($I, 'wait')) {
     $I->wait(1);
-}
+}*/

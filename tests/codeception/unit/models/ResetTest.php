@@ -44,11 +44,11 @@ class ResetTest extends TestCase
     {
         $model = new User();
 
+        $model->scenario = 'reset';
+
         $model->attributes = [
             'email' => 'demo@demo.d',
         ];
-
-        $model->scenario = 'reset';
 
         $this->specify('email should be send', function () use ($model) {
             expect('email is send', $model->sendResetEmail())->true();
