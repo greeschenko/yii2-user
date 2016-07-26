@@ -15,7 +15,7 @@ if (method_exists($I, 'wait')) {
 
 $I->see('Login', 'h1');
 
-/*$I->amGoingTo('try to login with empty credentials');
+$I->amGoingTo('try to login with empty credentials');
 $loginPage->login('', '');
 if (method_exists($I, 'wait')) {
     $I->wait(1);
@@ -24,21 +24,25 @@ $I->expectTo('see validations errors');
 $I->see('Email cannot be blank.');
 $I->see('Password cannot be blank.');
 
+if (method_exists($I, 'wait')) {
+    $I->wait(2);
+}
+
 $I->amGoingTo('try to login with wrong credentials');
 $loginPage->login('admin', 'wrong');
 if (method_exists($I, 'wait')) {
     $I->wait(1);
 }
 $I->expectTo('see validations errors');
-$I->see('Incorrect username or password.');
+$I->see('Incorrect email or password');
 
 $I->amGoingTo('try to login with correct credentials');
-$loginPage->login('root', 'rootpass');
+$loginPage->login('demo@demo.d', 'demopass');
 if (method_exists($I, 'wait')) {
     $I->wait(1);
 }
 $I->expectTo('see user info');
-$I->dontSee('Incorrect username or password.');
+$I->dontSee('Incorrect email or password');
 if (method_exists($I, 'wait')) {
     $I->wait(1);
-}*/
+}

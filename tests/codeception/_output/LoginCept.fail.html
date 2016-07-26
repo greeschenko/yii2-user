@@ -1,28 +1,72 @@
-<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body><pre>Exception (Database Exception) 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'yii2_basic_tests'' 
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="_csrf" name="csrf-param" />
+    <meta content="VW1FZDU1cEgACxYWcWZBEmA4LRFme0klYTd8FgBvPyBiIzccb19BAw==" name="csrf-token" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/assets/33840138/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/site.css" /></head>
+<body>
 
-in /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/Connection.php:550
+<div class="wrap">
+    <nav class="navbar-inverse navbar-fixed-top navbar" id="w0"><div class="container"><div class="navbar-header"><button data-target="#w0-collapse" data-toggle="collapse" class="navbar-toggle" type="button"><span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span></button><a href="/index-test.php" class="navbar-brand">My Company</a></div><div class="collapse navbar-collapse" id="w0-collapse"><ul class="navbar-nav navbar-right nav" id="w1"><li><a href="/index-test.php/site/index">Home</a></li>
+<li><a href="/index-test.php/site/about">About</a></li>
+<li><a href="/index-test.php/site/contact">Contact</a></li>
+<li><a href="/index-test.php/user/login">Login</a></li></ul></div></div></nav>
+    <div class="container">
+        <ul class="breadcrumb"><li><a href="/index-test.php">Home</a></li>
+<li class="active">Login</li>
+</ul>        
 
-Stack trace:
-#0 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/Connection.php(864): yii\db\Connection-&gt;open()
-#1 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/Connection.php(851): yii\db\Connection-&gt;getMasterPdo()
-#2 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/Command.php(219): yii\db\Connection-&gt;getSlavePdo()
-#3 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/Command.php(894): yii\db\Command-&gt;prepare(true)
-#4 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/Command.php(362): yii\db\Command-&gt;queryInternal('fetchAll', NULL)
-#5 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/mysql/Schema.php(198): yii\db\Command-&gt;queryAll()
-#6 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/mysql/Schema.php(97): yii\db\mysql\Schema-&gt;findColumns(Object(yii\db\TableSchema))
-#7 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/Schema.php(149): yii\db\mysql\Schema-&gt;loadTableSchema('user')
-#8 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/ActiveRecord.php(296): yii\db\Schema-&gt;getTableSchema('{{%user}}')
-#9 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/ActiveRecord.php(330): yii\db\ActiveRecord::getTableSchema()
-#10 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/BaseActiveRecord.php(427): yii\db\ActiveRecord-&gt;attributes()
-#11 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/db/BaseActiveRecord.php(269): yii\db\BaseActiveRecord-&gt;hasAttribute('scenario')
-#12 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/BaseYii.php(521): yii\db\BaseActiveRecord-&gt;__set('scenario', 'login')
-#13 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/base/Object.php(105): yii\BaseYii::configure(Object(greeschenko\user\models\User), Array)
-#14 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/greeschenko/yii2-user/controllers/LoginController.php(52): yii\base\Object-&gt;__construct(Array)
-#15 [internal function]: greeschenko\user\controllers\LoginController-&gt;actionIndex()
-#16 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
-#17 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/base/Controller.php(154): yii\base\InlineAction-&gt;runWithParams(Array)
-#18 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/base/Module.php(454): yii\base\Controller-&gt;runAction('index', Array)
-#19 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/web/Application.php(87): yii\base\Module-&gt;runAction('user/login/inde...', Array)
-#20 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application-&gt;handleRequest(Object(yii\web\Request))
-#21 /home/tmpinstall/system/home/lexey/www/yii2constructive.ga/htdocs/web/index-test.php(16): yii\base\Application-&gt;run()
-#22 {main}</pre></body><canvas id="fxdriver-screenshot-canvas" style="display: none;" width="1261" height="666"></canvas></html>
+<div class="site-login">
+    <h1>Login</h1>
+
+    <p> Please fill out the following fields to login: </p>
+
+    <form method="post" action="/index-test.php/user/login/index" class="form-horizontal" id="login-form">
+<input type="hidden" value="VW1FZDU1cEgACxYWcWZBEmA4LRFme0klYTd8FgBvPyBiIzccb19BAw==" name="_csrf" />
+        <div class="form-group field-user-email required">
+<label for="user-email" class="col-lg-1 control-label">Email</label>
+<div class="col-lg-3"><input type="text" name="User[email]" class="form-control" id="user-email" /></div>
+<div class="col-lg-8"><p class="help-block help-block-error"></p></div>
+</div>
+        <div class="form-group field-user-password required">
+<label for="user-password" class="col-lg-1 control-label">Password</label>
+<div class="col-lg-3"><input type="password" name="User[password]" class="form-control" id="user-password" /></div>
+<div class="col-lg-8"><p class="help-block help-block-error"></p></div>
+</div>
+        <div class="form-group field-user-rememberme">
+<div class="col-lg-offset-1 col-lg-3"><input type="hidden" value="0" name="User[rememberMe]" /><input type="checkbox" checked="checked" value="1" name="User[rememberMe]" id="user-rememberme" /> <label for="user-rememberme">Remember Me</label></div>
+<div class="col-lg-8"><p class="help-block help-block-error"></p></div>
+</div>
+        <div class="form-group">
+            <div class="col-lg-offset-1 col-lg-11">
+                <button name="login-button" class="btn btn-primary" type="submit">Login</button>                <a href="/user/password/reset-request" class="btn">I forget my password</a>            </div>
+        </div>
+
+    </form></div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">© My Company 2016</p>
+
+        <p class="pull-right">Powered by <a rel="external" href="http://www.yiiframework.com/">Yii Framework</a></p>
+    </div>
+</footer>
+
+<script src="/assets/f014958a/jquery.js"></script>
+<script src="/assets/f75994d8/yii.js"></script>
+<script src="/assets/f75994d8/yii.validation.js"></script>
+<script src="/assets/f75994d8/yii.activeForm.js"></script>
+<script src="/assets/33840138/js/bootstrap.js"></script>
+<script type="text/javascript">jQuery(document).ready(function () {
+jQuery('#login-form').yiiActiveForm([{"id":"user-email","name":"email","container":".field-user-email","input":"#user-email","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Email cannot be blank."});}},{"id":"user-password","name":"password","container":".field-user-password","input":"#user-password","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Password cannot be blank."});}},{"id":"user-rememberme","name":"rememberMe","container":".field-user-rememberme","input":"#user-rememberme","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.boolean(value, messages, {"trueValue":"1","falseValue":"0","message":"Remember Me must be either \"1\" or \"0\".","skipOnEmpty":1});}}], []);
+});</script>
+
+</body><canvas id="fxdriver-screenshot-canvas" style="display: none;" width="1366" height="682"></canvas></html>

@@ -17,35 +17,44 @@ $I->wantTo('ensure that login works');
 $loginPage = LoginPage::openBy($I);
 
 if (method_exists($I, 'wait')) {
-    $I->wait(5);
+    $I->wait(1);
 }
 
 $I->see('Login', 'h1');
 
-$I->amGoingTo('try to login with empty credentials');
-$loginPage->login('', '');
+$I->amGoingTo('go to password reset');
+$I->click('I forget my password');
+
 if (method_exists($I, 'wait')) {
     $I->wait(1);
 }
-$I->expectTo('see validations errors');
+
+$I->expectTo('see error on blank');
+$I->fillField('input[name="User[email]"]', '');
+$I->click('Send');
+
+if (method_exists($I, 'wait')) {
+    $I->wait(1);
+}
+
 $I->see('Email cannot be blank.');
-$I->see('Password cannot be blank.');
 
-$I->amGoingTo('try to login with wrong credentials');
-$loginPage->login('admin', 'wrong');
-if (method_exists($I, 'wait')) {
-    $I->wait(1);
-}
-$I->expectTo('see validations errors');
-$I->see('Incorrect username or password.');
+$I->expectTo('see error on wrong email');
+$I->fillField('input[name="User[email]"]', 'wrong@email.com');
+$I->click('Send');
 
-$I->amGoingTo('try to login with correct credentials');
-$loginPage->login('root', 'rootpass');
 if (method_exists($I, 'wait')) {
     $I->wait(1);
 }
-$I->expectTo('see user info');
-$I->dontSee('Incorrect username or password.');
+
+$I->see('There is no user with such email.');
+
+$I->expectTo('see success message');
+$I->fillField('input[name="User[email]"]', 'demo@demo.d');
+$I->click('Send');
+
 if (method_exists($I, 'wait')) {
     $I->wait(1);
 }
+
+$I->see('Check your email for further instructions.');

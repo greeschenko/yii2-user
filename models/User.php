@@ -93,7 +93,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             /* start login scenario */
-            [['username', 'password'], 'required','on'=>'login'],
+            [['email', 'password'], 'required','on'=>'login'],
             ['rememberMe', 'boolean','on'=>'login'],
             ['password', 'checkPassword','on'=>'login'],
             /* end login scenario */
@@ -130,7 +130,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['login'] = ['username', 'password', 'rememberMe'];
+        $scenarios['login'] = ['email', 'password', 'rememberMe'];
         $scenarios['reset'] = ['email'];
         $scenarios['passchange'] = ['newpassword','newpasswordre'];
 
@@ -140,7 +140,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function checkPassword($attribute, $params)
     {
         if ( !$this->validatePassword($this->$attribute) ) {
-            $this->addError($attribute, Yii::t('app', 'Wrong login or password'));
+            $this->addError($attribute, Yii::t('app', 'Incorrect email or password'));
         }
     }
 
@@ -186,9 +186,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $username
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByEmail($email)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -294,7 +294,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = static::findByUsername($this->username);
+            $this->_user = static::findByEmail($this->email);
         }
 
         return $this->_user;
