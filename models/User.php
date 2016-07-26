@@ -110,6 +110,7 @@ class User extends ActiveRecord implements IdentityInterface
             /* end password_reset */
 
             /* start password_change */
+            [['newpassword', 'newpasswordre'], 'required','on'=>'passchange'],
             ['newpassword','string','min'=>6,'max'=>255 , 'on' => 'passchange'],
             ['newpasswordre','compare','compareAttribute'=>'newpassword', 'on' => 'passchange'],
             /* end password_change */
