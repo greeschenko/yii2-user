@@ -1,0 +1,51 @@
+.strongpassmsg {
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 0.8em;
+    display: none;
+}
+
+.strongpasswrap {
+    height: 10px;
+    border: 1px solid #ccc;
+    margin: 2px 15px;
+    width: 260px;
+    display: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.strong-1,
+.strong-2,
+.strong-3,
+.strong-4,
+.strong-5,
+.strong-6 {
+    position: absolute;
+    width: 260px;
+    height: 10px;
+    top: 0;
+    left: -100%;
+}
+
+.strong-1,
+.strong-dw,
+.strong-3 {
+    background: red;
+    left: -75%;
+}
+
+.strong-4 {
+    background: orange;
+    left: -50%;
+}
+
+.strong-5 {
+    background: yellow;
+    left: -25%;
+}
+
+.strong-6 {
+    background: green;
+    left: 0%;
+}

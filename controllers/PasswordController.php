@@ -63,4 +63,52 @@ class PasswordController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionCheckStrong()
+    {
+        $res = [];
+        $strong = 0;
+
+        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            $password = Yii::$app->request->post()['password'];
+
+            if (strlen($password) > 6) {
+                $strong++;
+            }
+            if (strlen($password) > 10) {
+                $strong++;
+            }
+            if (preg_match("/([0-9]+)/", $password)) {
+                $strong++;
+            }
+            if (preg_match("/([a-z]+)/", $password)) {
+                $strong++;
+            }
+            if (preg_match("/([A-Z]+)/", $password)) {
+                $strong++;
+            }
+            if (preg_match("/\W/", $password)) {
+                $strong++;
+            }
+
+            if ($strong == 1) {
+                $res['msg'] = Yii::t('app', 'Very weak');
+            }
+            if ($strong == 4) {
+                $res['msg'] = Yii::t('app', 'Weak');
+            }
+            if ($strong == 5) {
+                $res['msg'] = Yii::t('app', 'Strong');
+            }
+            if ($strong == 6) {
+                $res['msg'] = Yii::t('app', 'Very Strong');
+            }
+
+            $res['strong'] = $strong;
+        }
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return $res;
+    }
 }
