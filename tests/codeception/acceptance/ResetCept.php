@@ -68,6 +68,28 @@ $user = User::findOne(['email' => 'demo@demo.d']);
 
 $I->amOnPage('/user/password/reset?token='.$user->password_reset_token);
 
+$I->expectTo('check password strong');
+$I->fillField('input[name="User[newpassword]"]', '111111');
+if (method_exists($I, 'wait')) {
+    $I->wait(1);
+}
+$I->see('Very weak');
+$I->fillField('input[name="User[newpassword]"]', '111111FFff');
+if (method_exists($I, 'wait')) {
+    $I->wait(1);
+}
+$I->see('Weak');
+$I->fillField('input[name="User[newpassword]"]', '111111FFffFF');
+if (method_exists($I, 'wait')) {
+    $I->wait(1);
+}
+$I->see('Strong');
+$I->fillField('input[name="User[newpassword]"]', '111111FFffFF}}');
+if (method_exists($I, 'wait')) {
+    $I->wait(1);
+}
+$I->see('Very Strong');
+
 $I->fillField('input[name="User[newpassword]"]', '');
 $I->fillField('input[name="User[newpasswordre]"]', '');
 $I->click('Save');

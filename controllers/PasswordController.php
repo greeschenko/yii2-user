@@ -91,7 +91,7 @@ class PasswordController extends Controller
                 $strong++;
             }
 
-            if ($strong == 1) {
+            if ($strong <= 3) {
                 $res['msg'] = Yii::t('app', 'Very weak');
             }
             if ($strong == 4) {
