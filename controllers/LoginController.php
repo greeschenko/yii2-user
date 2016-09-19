@@ -38,6 +38,7 @@ class LoginController extends Controller
             ],
         ];
     }
+
     /**
      * Login action.
      *

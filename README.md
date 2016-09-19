@@ -47,6 +47,7 @@ and change identityClass
         'user' => [
             'identityClass' => 'greeschenko\user\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['user/login'],
         ],
         ...
     ]
